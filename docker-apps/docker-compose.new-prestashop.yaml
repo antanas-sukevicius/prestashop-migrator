@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  prestashop:
+    image: prestashop/prestashop:latest
+    container_name: prestashop
+    environment:
+      - DB_SERVER=db
+      - PS_DOMAIN=localhost
+      - PS_LANGUAGE=en
+      - PS_COUNTRY=US
+      - PS_TIMEZONE=Europe/Vilnius
+      - PS_HANDLE_DYNAMIC_DOMAIN=0
+      - DB_USER=prestashop
+      - DB_PASSWD=prestashop
+      - DB_NAME=prestashop
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - prestashop_data:/var/www/html
+
+  db:
+    image: mysql:5.7
+    container_name: prestashop-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=prestashop
+      - MYSQL_DATABASE=prestashop
+      - MYSQL_USER=prestashop
+      - MYSQL_PASSWORD=prestashop
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  prestashop_data:
+  db_data:

@@ -1,0 +1,13 @@
+
+services:
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: examplepassword
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql:ro
